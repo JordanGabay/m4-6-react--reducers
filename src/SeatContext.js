@@ -1,16 +1,29 @@
-import React, {createContext, useReducer} from 'react';
+import React, { createContext, useReducer } from "react";
 
 export const SeatContext = React.createContext();
 
 const initialState = {
   hasLoaded: false,
-  seats: null,
+  bookedSeats: null,
   numOfRows: 0,
   seatsPerRow: 0,
 };
 
 function reducer(state, action) {
-  // TODO
+  switch (action.type) {
+    case "receive-seat-info-from-server": {
+      return {
+        ...state,
+        hasLoaded: true,
+        seats: action.seats,
+        numOfRows: action.numOfRows,
+        seatsPerRow: action.seatsPerRow,
+      };
+    }
+
+    default:
+      throw new Error(`Unrecognized action: ${action.type}`);
+  }
 }
 
 export const SeatProvider = ({ children }) => {
